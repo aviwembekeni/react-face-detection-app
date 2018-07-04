@@ -36,8 +36,21 @@ class App extends Component {
       imgUrl: '',
       box: {},
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+          id: '',
+          name: '',
+          email: '',
+          entries: 0,
+          joined: ''
+      }
     }
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:3001')
+    .then(response => response.json())
+    .then(console.log);
   }
 
   displayFaceBox = (box) => {
@@ -85,8 +98,20 @@ class App extends Component {
     this.setState({route: route})
   }
 
+  loadUser = (data) => {
+
+     this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: 0,
+      joined: new Date()
+     }})
+
+  }
+
   render() {
-    const {input, imgUrl, box, route, isSignedIn} = this.state;
+    const {input, imgUrl, box, route, isSignedIn, user} = this.state;
     return (
       <div className="App">
         {/*<Particles className="particles"
@@ -99,15 +124,15 @@ class App extends Component {
          ? 
          <div>
           <Logo />
-          <Rank />
+          <Rank name={user.name} entries={user.entries}/>
           <ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
           <FaceRecognition box={box} imgUrl={imgUrl}/>
         </div>
          
         : (route === 'signin')?
-        <SignIn onRouteChange={this.onRouteChange}/>
+        <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
         :
-        <Register onRouteChange={this.onRouteChange}/>
+        <Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
         }
       </div>
     );
