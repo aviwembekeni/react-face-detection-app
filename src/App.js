@@ -128,8 +128,8 @@ class App extends Component {
       id: data.id,
       name: data.name,
       email: data.email,
-      entries: 0,
-      joined: new Date()
+      entries: data.entries,
+      joined: data.joined
      }})
 
   }
