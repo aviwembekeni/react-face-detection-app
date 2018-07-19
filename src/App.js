@@ -50,7 +50,8 @@ class App extends Component {
   componentDidMount() {
     fetch('https://face-recognition-app-av.herokuapp.com/')
     .then(response => response.json())
-    .then(console.log);
+    .then(console.log)
+    .catch(err => console.log(err))
   }
 
   displayFaceBox = (box) => {
